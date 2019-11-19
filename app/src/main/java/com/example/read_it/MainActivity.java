@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
              getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isfirstrun", false).commit();
         }
         else {
-            mainScreen = new Intent(MainActivity.this, mainScreen.class);
+            mainScreen = new Intent(MainActivity.this, SearchBooks.class);
         }
 
         logo = findViewById(R.id.logo);

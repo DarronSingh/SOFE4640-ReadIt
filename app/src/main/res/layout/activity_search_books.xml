@@ -6,37 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".SearchBooks">
 
-    <EditText
-        android:id="@+id/searchBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:hint="Enter keyword..."
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.136"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="648dp"
-        android:text="Search   "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.361"
-        app:layout_constraintStart_toEndOf="@+id/searchBar"
-        android:onClick="searchBooks"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
 
-    <ListView
-        android:id="@+id/viewBooks"
-        android:layout_width="406dp"
-        android:layout_height="358dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+        <EditText
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter keyword..."
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="searchBooks"
+            android:text="Search   " />
+
+        <ListView
+            android:id="@+id/viewBooks"
+            android:layout_width="406dp"
+            android:layout_height="606dp"
+            android:divider="#000"
+            android:dividerHeight="1dp"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false">
+
+        </ListView>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

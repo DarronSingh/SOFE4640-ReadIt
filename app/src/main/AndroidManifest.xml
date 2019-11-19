@@ -13,7 +13,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SearchBooks"></activity>
         <activity android:name=".UserPreferences" />
-        <activity android:name=".mainScreen" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
