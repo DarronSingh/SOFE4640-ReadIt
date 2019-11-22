@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -63,6 +64,7 @@ public class SearchBooks extends AppCompatActivity {
                 String firstPref = (intent.getStringExtra((UserPreferences.EXTRA_CHOICEONE)));
                 String secondPref = (intent.getStringExtra((UserPreferences.EXTRA_CHOICETWO)));
                 String thirdPref = (intent.getStringExtra((UserPreferences.EXTRA_CHOICETHREE)));
+                System.out.println("First PRef" + firstPref);
                 searchBooks(firstPref);
 
             }
@@ -98,6 +100,15 @@ public class SearchBooks extends AppCompatActivity {
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_activity, from, to);
         viewSearch.setAdapter(simpleAdapter);
+
+        viewSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(SearchBooks.this, ViewBook.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void searchBooks(View v){
@@ -133,7 +144,8 @@ public class SearchBooks extends AppCompatActivity {
     public void searchBooks(String genre){
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String finalQuery = URI+"subject"+genre;
+        String finalQuery = URI+"subject:"+genre;
+        System.out.println(finalQuery);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, finalQuery,
                 new Response.Listener<String>() {
