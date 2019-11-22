@@ -2,6 +2,7 @@ package com.example.read_it;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -51,6 +52,24 @@ public class SearchBooks extends AppCompatActivity {
         search = findViewById(R.id.searchBar);
         searchBtn = findViewById(R.id.search);
         viewSearch = findViewById(R.id.viewBooks);
+
+        /*
+        If statement below checks which activity is calling the search books activity
+         */
+        Intent intent = this.getIntent();
+        if(intent != null){
+            String strData = intent.getExtras().getString("Uniqid");
+            if(strData.equals("From_pref")){
+                String firstPref = (intent.getStringExtra((UserPreferences.EXTRA_CHOICEONE)));
+                String secondPref = (intent.getStringExtra((UserPreferences.EXTRA_CHOICETWO)));
+                String thirdPref = (intent.getStringExtra((UserPreferences.EXTRA_CHOICETHREE)));
+                searchBooks(firstPref);
+
+            }
+            else if (strData.equals("From_home")){
+                //search.setText("");
+            }
+        }
 
         try {
             setupAdapter(books.size());
@@ -109,6 +128,33 @@ public class SearchBooks extends AppCompatActivity {
 
         queue.add(stringRequest);
 
+    }
+
+    public void searchBooks(String genre){
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String finalQuery = URI+"subject"+genre;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, finalQuery,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+//                        Toast.makeText(getApplicationContext(), response + " C", Toast.LENGTH_LONG).show();
+                        try {
+                            JsonParser(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Error with request!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        queue.add(stringRequest);
     }
 
     public void JsonParser(String response) throws JSONException {

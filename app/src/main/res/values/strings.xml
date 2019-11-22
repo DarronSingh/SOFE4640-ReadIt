@@ -3,4 +3,21 @@
     <string name="title_activity_main_screen">mainScreen</string>
 
     <string name="google_books_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDIgCNZ9J2qBFeCT8gxVW4-ZRZd4bllw-0</string>
+
+    <string-array name="genres">
+        <item>None</item>
+        <item>Action</item>
+        <item>Adventure</item>
+        <item>Crime</item>
+        <item>Drama</item>
+        <item>fantasy</item>
+        <item>Horror</item>
+        <item>Mystery</item>
+        <item>Romance</item>
+        <item>Thriller</item>
+        <item>Nonfiction</item>
+
+    </string-array>
+
+
 </resources>
