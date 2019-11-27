@@ -1,11 +1,15 @@
 package com.example.read_it;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
 import androidx.annotation.Nullable;
+
+import static android.icu.text.MessagePattern.ArgType.SELECT;
 
 public class Database extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "readit.db";
@@ -18,14 +22,12 @@ public class Database extends SQLiteOpenHelper {
     public static final String GENRE_ID = "genre_id";
     public static final String GENRE_NAME = "genre_name";
 
-    public static final String TBL_BOOKS = "book_table";
-    public static final String BOOK_ID = "book_id";
-    public static final String BOOK_NAME = "book_name";
-    public static final String BOOK_GENRE_ID = "genre_id";
-    public static final String BOOK_DESCRIPTION = "book_description";
-    public static final String BOOK_AUTHOR_ID = "author_id";
-
     public static final String TBL_USERBOOKS = "userbooks_table";
+    public static final String USERBOOKS_TITLE = "title";
+    public static final String USERBOOKS_AUTHOR = "author_name";
+    public static final String USERBOOKS_DESCRIPTION = "description";
+    public static final String USERBOOKS_PAGECOUNT = "page_count";
+    public static final String USERBOOKS_RATING = "rating";
     public static final String ENTRY_ID = "entry_id";
     public static final String USERBOOKS_BOOK_ID = "book_id";
     public static final String PROGRESS = "progress";
@@ -52,15 +54,14 @@ public class Database extends SQLiteOpenHelper {
             GENRE_ID + " integer  primary key," +
             GENRE_NAME + " text)";
 
-    private String TBL_CREATE_BOOKS = "create table " + TBL_BOOKS + " (" +
-            BOOK_ID + " integer  primary key," +
-            BOOK_NAME + " text," +
-            BOOK_GENRE_ID + " integer," +
-            BOOK_DESCRIPTION + " text," +
-            BOOK_AUTHOR_ID + " integer)";
 
     private String TBL_CREATE_USERBOOKS = "create table " + TBL_USERBOOKS + " (" +
             ENTRY_ID + " integer  primary key," +
+            USERBOOKS_TITLE + " text," +
+            USERBOOKS_AUTHOR + " text," +
+            USERBOOKS_DESCRIPTION + " text," +
+            USERBOOKS_PAGECOUNT + " integer," +
+            USERBOOKS_RATING + " double," +
             USERBOOKS_BOOK_ID + " integer," +
             PROGRESS + " decimal," +
             IS_COMPLETE + " boolean)";
@@ -86,7 +87,6 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TBL_CREATE_AUTHORS);
         db.execSQL(TBL_CREATE_GENRES);
-        db.execSQL(TBL_CREATE_BOOKS);
         db.execSQL(TBL_CREATE_USERBOOKS);
         db.execSQL(TBL_CREATE_NOTES);
         db.execSQL(TBL_CREATE_AUTHOR_PREFERENCES);
@@ -95,6 +95,28 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+       // db.execSQL("DROP IF TABLE EXISTS " + TBL_AUTHORS + TBL_GENRES + TBL_USERBOOKS + TBL_NOTES + TBL_AUTHOR_PREFERENCES + TBL_GENRE_PREFERENCES);
+    }
 
+    public boolean saveFavBooks(String bookTitle, String bookAuthor, String description, int pageCount, double rating) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(USERBOOKS_TITLE, bookTitle);
+        values.put(USERBOOKS_AUTHOR, bookAuthor);
+        values.put(USERBOOKS_DESCRIPTION, description);
+        values.put(USERBOOKS_PAGECOUNT, pageCount);
+        values.put(USERBOOKS_RATING, rating);
+        long result = db.insert(TBL_USERBOOKS, null, values);
+        if (result == -1) {
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public Cursor getFavBooks(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM " + TBL_USERBOOKS, null);
+        return data;
     }
 }

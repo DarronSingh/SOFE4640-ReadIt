@@ -58,17 +58,16 @@ public class SearchBooks extends AppCompatActivity {
         If statement below checks which activity is calling the search books activity
          */
         Intent intent = this.getIntent();
-        if(intent != null){
+        if (intent != null) {
             String strData = intent.getExtras().getString("Uniqid");
-            if(strData.equals("From_pref")){
+            if (strData.equals("From_pref")) {
                 String firstPref = (intent.getStringExtra((UserPreferences.EXTRA_CHOICEONE)));
                 String secondPref = (intent.getStringExtra((UserPreferences.EXTRA_CHOICETWO)));
                 String thirdPref = (intent.getStringExtra((UserPreferences.EXTRA_CHOICETHREE)));
                 System.out.println("First PRef" + firstPref);
                 searchBooks(firstPref);
 
-            }
-            else if (strData.equals("From_home")){
+            } else if (strData.equals("From_home")) {
                 //search.setText("");
             }
         }
@@ -80,9 +79,12 @@ public class SearchBooks extends AppCompatActivity {
         }
     }
 
+    /*
+    Sets up list view for search results
+     */
     public void setupAdapter(int length) throws JSONException {
 
-        for(BookClass book: books) {
+        for (BookClass book : books) {
             listviewShortDescription.add(book.getAuthors());
             listviewTitle.add(book.getTitle());
         }
@@ -96,27 +98,31 @@ public class SearchBooks extends AppCompatActivity {
             aList.add(hm);
         }
 
-        System.out.println("73");
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_activity, from, to);
         viewSearch.setAdapter(simpleAdapter);
+
+        /*
+        opens intent with book info if user clicks on specific book
+         */
 
         viewSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(SearchBooks.this, ViewBook.class);
+                intent.putExtra("bookInfo", books.get(i));
                 startActivity(intent);
             }
         });
 
     }
 
-    public void searchBooks(View v){
+    public void searchBooks(View v) {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         String searchQuery = search.getText().toString();
         String query = searchQuery.replace(" ", "+");
-        String finalQuery = URI+query;
+        String finalQuery = URI + query;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, finalQuery,
                 new Response.Listener<String>() {
@@ -141,10 +147,10 @@ public class SearchBooks extends AppCompatActivity {
 
     }
 
-    public void searchBooks(String genre){
+    public void searchBooks(String genre) {
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String finalQuery = URI+"subject:"+genre;
+        String finalQuery = URI + "subject:" + genre;
         System.out.println(finalQuery);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, finalQuery,
@@ -180,11 +186,31 @@ public class SearchBooks extends AppCompatActivity {
 
         for (int i = 0; i < responseLength; i++) {
             JSONObject bookJson = items.getJSONObject(i).getJSONObject("volumeInfo");
-            BookClass book = new BookClass(bookJson.getString("title"), bookJson.getJSONArray("authors"));
+
+            String title = bookJson.has("title") ? bookJson.getString("title") : "";
+            JSONArray authors = bookJson.has("authors") ? bookJson.getJSONArray("authors") : new JSONArray();
+            String authorsString = this.getAuthorsString(authors);
+            System.out.println("Author:" + authors);
+            String description = bookJson.has("description") ? bookJson.getString("description") : "";
+            int pageCount = bookJson.has("pageCount") ? bookJson.getInt("pageCount") : 0;
+            double rating = bookJson.has("averageRating") ? bookJson.getDouble("averageRating") : 0.0;
+
+            BookClass book = new BookClass(title,authorsString, description, pageCount, rating);
             books.add(book);
         }
 
         setupAdapter(responseLength);
+    }
+
+    public String getAuthorsString(JSONArray authors) throws JSONException {
+
+        String s = "";
+
+        for (int i = 0; i < authors.length(); i++) {
+            s += authors.getString(i) + ", ";
+        }
+
+        return s.substring(0, s.length()-2);
     }
 
 }
