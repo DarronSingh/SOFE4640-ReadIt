@@ -227,7 +227,7 @@ public class SearchBooks extends AppCompatActivity {
             String previewLink = bookJson.has("previewLink") ? bookJson.getString("previewLink") : "";
             String buyLink = saleJson.has("buyLink") ? saleJson.getString("buyLink") : "";
 
-            BookClass book = new BookClass(title,authorsString, description, pageCount, rating, previewLink, buyLink, imageUrl);
+            BookClass book = new BookClass(title,authorsString, description, pageCount, rating, previewLink, buyLink, imageUrl, 0);
             books.add(book);
         }
 

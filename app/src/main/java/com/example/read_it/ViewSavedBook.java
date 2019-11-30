@@ -3,6 +3,7 @@ package com.example.read_it;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -30,10 +31,10 @@ public class ViewSavedBook extends AppCompatActivity {
     Button deleteBtn, updateBtn;
     EditText pagesFinished;
     ProgressBar mProgress;
-    int UserNumOfPages, TotalPageNum;
-    String imageURL;
     ImageView thumnail;
 
+    int UserNumOfPages, TotalPageNum, progress;
+    String imageURL, title, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,22 +57,24 @@ public class ViewSavedBook extends AppCompatActivity {
         mProgress.setProgress(0);
 
         Intent intent = getIntent();
-        Bundle b = intent.getExtras();
+        Bundle bundle = intent.getExtras();
 
-        if (b!= null) {
-            String t = (String) b.get("BookInfo");
-            String d = (String) b.get("BookDes");
-            TotalPageNum = (int) b.get("numOfPages");
-            imageURL = (String) b.get("imageUrl");
-            System.out.println("image: " + imageURL);
+        if (bundle!= null) {
+            title = (String) bundle.get("BookInfo");
+            description = (String) bundle.get("BookDes");
+            TotalPageNum = (int) bundle.get("numOfPages");
+            imageURL = (String) bundle.get("imageUrl");
+            progress = (int) bundle.get("progress");
             new DownloadImageTask(thumnail).execute(imageURL);
-            textT.setText(t);
-            textD.setText(d);
+            Cursor c = myDB.getSavedBookProgress(this.title);
+            c.moveToFirst();
+            progress = c.getInt(c.getColumnIndex("progress"));
+            mProgress.setProgress(progress);
+            textT.setText(title);
+            textD.setText(description);
         }
+
         totalPagesText.setText("Out of " + TotalPageNum);
-
-
-
         delete();
 
         }
@@ -87,6 +90,7 @@ public class ViewSavedBook extends AppCompatActivity {
         }
         int percentComplete = (int) Math.floor((UserNumOfPages*100.0)/TotalPageNum);
         mProgress.setProgress(percentComplete);
+        myDB.updateProgress(title, percentComplete);
     }
 
     public void delete() {

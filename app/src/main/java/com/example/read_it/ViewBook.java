@@ -114,7 +114,7 @@ public class ViewBook extends AppCompatActivity {
     }
 
     public void save(View v){
-        boolean isInserted = myDB.saveFavBooks(book.getTitle(), book.getAuthors(), book.getDescription(), book.getPageCount(), book.getRating(), book.getPreviewLink(), book.getBuyLink(), book.getThumbnailLink());
+        boolean isInserted = myDB.saveFavBooks(book.getTitle(), book.getAuthors(), book.getDescription(), book.getPageCount(), book.getRating(), book.getPreviewLink(), book.getBuyLink(), book.getThumbnailLink(), book.getProgress());
         Toast.makeText(ViewBook.this, book.getTitle() + "has been saved!", Toast.LENGTH_SHORT).show();
 
     }
