@@ -222,7 +222,7 @@ public class SearchBooks extends AppCompatActivity {
             String description = bookJson.has("description") ? bookJson.getString("description") : "";
             int pageCount = bookJson.has("pageCount") ? bookJson.getInt("pageCount") : 0;
             double rating = bookJson.has("averageRating") ? bookJson.getDouble("averageRating") : 0.0;
-            String imageUrl = bookJson.has("imageLinks") ? bookJson.getJSONObject("imageLinks").getString("smallThumbnail") : "";
+            String imageUrl = bookJson.has("imageLinks") ? bookJson.getJSONObject("imageLinks").getString("thumbnail") : "";
             System.out.println("URL: " + imageUrl);
             String previewLink = bookJson.has("previewLink") ? bookJson.getString("previewLink") : "";
             String buyLink = saleJson.has("buyLink") ? saleJson.getString("buyLink") : "";
@@ -241,8 +241,9 @@ public class SearchBooks extends AppCompatActivity {
         for (int i = 0; i < authors.length(); i++) {
             s += authors.getString(i) + ", ";
         }
+        System.out.println("string" + s);
+        return s.length() < 2 ? s : s.substring(0, s.length()-2);
 
-        return s.substring(0, s.length()-2);
     }
 
 }

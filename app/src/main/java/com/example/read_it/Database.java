@@ -66,7 +66,7 @@ public class Database extends SQLiteOpenHelper {
             USERBOOKS_PAGECOUNT + " integer," +
             USERBOOKS_RATING + " double," +
             USERBOOKS_BOOK_ID + " integer," +
-            PROGRESS + " decimal," +
+            PROGRESS + " integer," +
             BOOKLINKBUY + " text," +
             BOOKLINKPREVIEW + " text," +
             THUMBNAILLINK + " text," +

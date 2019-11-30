@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +26,7 @@ public class ViewBook extends AppCompatActivity {
     Database myDB;
     Button backBtn, saveBtn;
     BookClass book;
-    TextView titleView, descriptionView, authorView, ratingView, pageCountView;
+    TextView titleView, descriptionView, authorView, ratingView, pageCountView, previewText, buyText;
     ImageView previewImage, buyImage, thumbnailImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +34,21 @@ public class ViewBook extends AppCompatActivity {
 
         setContentView(R.layout.activity_view_book);
 
+        getSupportActionBar().setTitle("Book Information");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         myDB = new Database(this);
-        backBtn = findViewById(R.id.back);
         saveBtn = findViewById(R.id.saveButton);
         titleView = findViewById(R.id.titleView);
         descriptionView = findViewById(R.id.descriptionText);
+        descriptionView.setMovementMethod(new ScrollingMovementMethod());
         authorView = findViewById(R.id.authorsText);
         ratingView = findViewById(R.id.ratingText);
         pageCountView = findViewById(R.id.pageCountText);
         thumbnailImage = findViewById(R.id.thumbNailView);
+
+
+
 
 
 
@@ -66,6 +73,7 @@ public class ViewBook extends AppCompatActivity {
         System.out.println("buy" + book.getBuyLink());
 
         if (!book.getPreviewLink().equals("")){
+            previewText = findViewById(R.id.previewText);
             previewImage = findViewById(R.id.previewImage);
             previewImage.setImageResource(R.drawable.preview);
 
@@ -84,6 +92,7 @@ public class ViewBook extends AppCompatActivity {
         }
 
         if (!book.getBuyLink().equals("")){
+            buyText = findViewById(R.id.purchaseText);
             buyImage = findViewById(R.id.buyLink);
             buyImage.setImageResource(R.drawable.google_store);
 
@@ -116,7 +125,7 @@ public class ViewBook extends AppCompatActivity {
     }
 
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
         public DownloadImageTask(ImageView bmImage) {

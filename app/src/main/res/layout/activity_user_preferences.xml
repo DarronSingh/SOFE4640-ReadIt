@@ -4,23 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#83217983"
     tools:context=".UserPreferences">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Favorite Author from each genre:"
+        android:text="User Preferences"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.559"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="241dp"
+        android:layout_width="405dp"
+        android:layout_height="331dp"
         android:layout_marginTop="64dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,14 +32,17 @@
         <TextView
             android:id="@+id/fantasyText1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Please Select your Top 3 Genres:" />
+            android:layout_height="40dp"
+            android:text="Please Select your Top 3 Genres:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Top Favrorite Genre:" />
+            android:layout_height="33dp"
+            android:text="Top Favrorite Genre:"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/fantasyOne"
@@ -47,8 +52,9 @@
         <TextView
             android:id="@+id/textView5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Second Favorite Genre:" />
+            android:layout_height="33dp"
+            android:text="Second Favorite Genre:"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/fantasyTwo"
@@ -58,8 +64,9 @@
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Third Favorite Genre:" />
+            android:layout_height="32dp"
+            android:text="Third Favorite Genre:"
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/fantasyThree"
@@ -71,10 +78,12 @@
         android:id="@+id/next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:onClick="next"
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:onClick="next"/>
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

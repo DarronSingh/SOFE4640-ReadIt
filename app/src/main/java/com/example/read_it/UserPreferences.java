@@ -74,7 +74,6 @@ public class UserPreferences extends AppCompatActivity implements  AdapterView.O
             choiceOne = genreOne.getSelectedItem().toString();
             choiceTwo = genreTwo.getSelectedItem().toString();
            choiceThree = genreThree.getSelectedItem().toString();
-        Toast.makeText(adapterView.getContext(), "Choices:" + choiceOne + choiceTwo, Toast.LENGTH_SHORT).show();
 
     }
 
