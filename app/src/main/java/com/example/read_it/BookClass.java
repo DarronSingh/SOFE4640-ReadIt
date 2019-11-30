@@ -12,16 +12,24 @@ public class BookClass implements Parcelable {
     private String description;
     private int pageCount;
     private double rating;
+    private String imageUrl;
+    private String previewLink;
+    private String buyLink;
+    private String thumbnailLink;
 
 
     public BookClass() { };
 
-    public BookClass(String title, String authors, String description, int pageCount, double rating){
+    public BookClass(String title, String authors, String description, int pageCount, double rating, String previewLink, String buyLink, String thumbnailLink){
         this.title = title;
         this.authors=authors;
         this.description = description;
         this.pageCount = pageCount;
         this.rating = rating;
+        this.previewLink = previewLink;
+        this.buyLink = buyLink;
+        this.thumbnailLink = thumbnailLink;
+        //this.imageUrl = imageUrl;
     }
 
     protected BookClass(Parcel in) {
@@ -30,6 +38,18 @@ public class BookClass implements Parcelable {
         description = in.readString();
         pageCount = in.readInt();
         rating = in.readDouble();
+        previewLink = in.readString();
+        buyLink = in.readString();
+        thumbnailLink = in.readString();
+        //imageUrl = in.readString();
+    }
+
+    public String getThumbnailLink() {
+        return thumbnailLink;
+    }
+
+    public void setThumbnailLink(String thumbnailLink) {
+        this.thumbnailLink = thumbnailLink;
     }
 
     public static final Creator<BookClass> CREATOR = new Creator<BookClass>() {
@@ -81,9 +101,33 @@ public class BookClass implements Parcelable {
         return this.authors;
     }
 
+    public String getPreviewLink() {
+        return previewLink;
+    }
+
+    public void setPreviewLink(String previewLink) {
+        this.previewLink = previewLink;
+    }
+
+    public String getBuyLink() {
+        return buyLink;
+    }
+
+    public void setBuyLink(String buyLink) {
+        this.buyLink = buyLink;
+    }
+
     public void setAuthors(String authors) {
         this.authors = authors;
     }
+
+//    public String getImageUrl() {
+//        return imageUrl;
+//    }
+//
+//    public void setImageUrl(String imageUrl) {
+//        this.imageUrl = imageUrl;
+//    }
 
     @Override
     public int describeContents() {
@@ -97,6 +141,10 @@ public class BookClass implements Parcelable {
         parcel.writeString(description);
         parcel.writeInt(pageCount);
         parcel.writeDouble(rating);
+        parcel.writeString(previewLink);
+        parcel.writeString(buyLink);
+        parcel.writeString(thumbnailLink);
+        //parcel.writeString(imageUrl);
 
 
 

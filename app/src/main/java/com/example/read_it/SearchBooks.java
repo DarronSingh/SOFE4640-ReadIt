@@ -3,6 +3,11 @@ package com.example.read_it;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +28,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +53,8 @@ public class SearchBooks extends AppCompatActivity {
     ArrayList<String> listviewTitle = new ArrayList<>();
 
     ArrayList<String> listviewShortDescription = new ArrayList<>();
+
+    ArrayList<String> listviewImage = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +90,17 @@ public class SearchBooks extends AppCompatActivity {
         }
     }
 
+    public Drawable drawableFromUrl(String url) throws IOException {
+        Bitmap x;
+
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        connection.connect();
+        InputStream input = connection.getInputStream();
+
+        x = BitmapFactory.decodeStream(input);
+        return new BitmapDrawable(Resources.getSystem(), x);
+    }
+
     /*
     Sets up list view for search results
      */
@@ -87,6 +109,8 @@ public class SearchBooks extends AppCompatActivity {
         for (BookClass book : books) {
             listviewShortDescription.add(book.getAuthors());
             listviewTitle.add(book.getTitle());
+            //listviewImage.add(book.getImageUrl());
+
         }
 
         for (int i = 0; i < length; i++) {
@@ -94,7 +118,10 @@ public class SearchBooks extends AppCompatActivity {
             hm.put("listview_title", listviewTitle.get(i));
             hm.put("listview_discription", listviewShortDescription.get(i));
             System.out.println(listviewShortDescription.get(i));
+            //hm.put("listview_image", listviewImage.get(i));
             hm.put("listview_image", Integer.toString(R.drawable.logo));
+
+
             aList.add(hm);
         }
 
@@ -186,6 +213,7 @@ public class SearchBooks extends AppCompatActivity {
 
         for (int i = 0; i < responseLength; i++) {
             JSONObject bookJson = items.getJSONObject(i).getJSONObject("volumeInfo");
+            JSONObject saleJson = items.getJSONObject(i).getJSONObject("saleInfo");
 
             String title = bookJson.has("title") ? bookJson.getString("title") : "";
             JSONArray authors = bookJson.has("authors") ? bookJson.getJSONArray("authors") : new JSONArray();
@@ -194,8 +222,12 @@ public class SearchBooks extends AppCompatActivity {
             String description = bookJson.has("description") ? bookJson.getString("description") : "";
             int pageCount = bookJson.has("pageCount") ? bookJson.getInt("pageCount") : 0;
             double rating = bookJson.has("averageRating") ? bookJson.getDouble("averageRating") : 0.0;
+            String imageUrl = bookJson.has("imageLinks") ? bookJson.getJSONObject("imageLinks").getString("smallThumbnail") : "";
+            System.out.println("URL: " + imageUrl);
+            String previewLink = bookJson.has("previewLink") ? bookJson.getString("previewLink") : "";
+            String buyLink = saleJson.has("buyLink") ? saleJson.getString("buyLink") : "";
 
-            BookClass book = new BookClass(title,authorsString, description, pageCount, rating);
+            BookClass book = new BookClass(title,authorsString, description, pageCount, rating, previewLink, buyLink, imageUrl);
             books.add(book);
         }
 

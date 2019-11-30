@@ -32,6 +32,9 @@ public class Database extends SQLiteOpenHelper {
     public static final String USERBOOKS_BOOK_ID = "book_id";
     public static final String PROGRESS = "progress";
     public static final String IS_COMPLETE = "is_complete";
+    public static final String BOOKLINKBUY = "book_link";
+    public static final String BOOKLINKPREVIEW = "book_link_preview";
+    public static final String THUMBNAILLINK = "thumbnail_link";
 
     public static final String TBL_NOTES = "note_table";
     public static final String NOTE_ID = "note_id";
@@ -64,6 +67,9 @@ public class Database extends SQLiteOpenHelper {
             USERBOOKS_RATING + " double," +
             USERBOOKS_BOOK_ID + " integer," +
             PROGRESS + " decimal," +
+            BOOKLINKBUY + " text," +
+            BOOKLINKPREVIEW + " text," +
+            THUMBNAILLINK + " text," +
             IS_COMPLETE + " boolean)";
 
     private String TBL_CREATE_NOTES = "create table " + TBL_NOTES + " (" +
@@ -98,7 +104,7 @@ public class Database extends SQLiteOpenHelper {
        // db.execSQL("DROP IF TABLE EXISTS " + TBL_AUTHORS + TBL_GENRES + TBL_USERBOOKS + TBL_NOTES + TBL_AUTHOR_PREFERENCES + TBL_GENRE_PREFERENCES);
     }
 
-    public boolean saveFavBooks(String bookTitle, String bookAuthor, String description, int pageCount, double rating) {
+    public boolean saveFavBooks(String bookTitle, String bookAuthor, String description, int pageCount, double rating, String buyLink, String previewLink, String thumbnailLink) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(USERBOOKS_TITLE, bookTitle);
@@ -106,6 +112,9 @@ public class Database extends SQLiteOpenHelper {
         values.put(USERBOOKS_DESCRIPTION, description);
         values.put(USERBOOKS_PAGECOUNT, pageCount);
         values.put(USERBOOKS_RATING, rating);
+        values.put(BOOKLINKBUY, buyLink);
+        values.put(BOOKLINKPREVIEW, previewLink);
+        values.put(THUMBNAILLINK, thumbnailLink );
         long result = db.insert(TBL_USERBOOKS, null, values);
         if (result == -1) {
             return false;

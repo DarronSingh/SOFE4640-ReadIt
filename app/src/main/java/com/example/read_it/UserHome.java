@@ -28,6 +28,7 @@ public class UserHome extends AppCompatActivity {
 
     ArrayList<String> listViewTitle = new ArrayList<>();
     ArrayList<String> listViewDes = new ArrayList<>();
+    ArrayList<Integer> listViewPage = new ArrayList<>();
 
     List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
     String[] from = {"listview_image", "listview_title", "listview_discription"};
@@ -51,9 +52,11 @@ public class UserHome extends AppCompatActivity {
                String title = favBooks.getString(favBooks.getColumnIndex("title"));
                String authors = favBooks.getString(favBooks.getColumnIndex("author_name"));
                String description = favBooks.getString(favBooks.getColumnIndex("description"));
+               int pageNum = favBooks.getInt(favBooks.getColumnIndex("page_count"));
 
                listViewTitle.add(title);
                listViewDes.add(authors + "\n\n" + description);
+               listViewPage.add(pageNum);
 
                favBooks.moveToNext();
            }
@@ -76,9 +79,12 @@ public class UserHome extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String t = listViewTitle.get(i);
                 String d = listViewDes.get(i);
+                int numberOfPages = listViewPage.get(i);
+
                 Intent intent = new Intent(UserHome.this, ViewSavedBook.class);
                 intent.putExtra("BookInfo", t);
                 intent.putExtra("BookDes", d);
+                intent.putExtra("numOfPages", numberOfPages);
                 startActivity(intent);
             }
         });
