@@ -56,4 +56,5 @@ public class ViewBook extends AppCompatActivity {
         Intent intent = new Intent(ViewBook.this, SearchBooks.class);
         startActivity(intent);
     }
+
 }

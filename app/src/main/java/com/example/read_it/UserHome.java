@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -69,9 +71,19 @@ public class UserHome extends AppCompatActivity {
         SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_activity, from, to);
         savedBooks.setAdapter(simpleAdapter);
 
+        savedBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String t = listViewTitle.get(i);
+                String d = listViewDes.get(i);
+                Intent intent = new Intent(UserHome.this, ViewSavedBook.class);
+                intent.putExtra("BookInfo", t);
+                intent.putExtra("BookDes", d);
+                startActivity(intent);
+            }
+        });
 
-
-
+//(ArrayAdapter) savedBooks.getAdapter().getItem(i);
     }
 
     public void searchCall(View v){

@@ -119,4 +119,9 @@ public class Database extends SQLiteOpenHelper {
         Cursor data = db.rawQuery("SELECT * FROM " + TBL_USERBOOKS, null);
         return data;
     }
+
+    public Integer delete (String title) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TBL_USERBOOKS, "title = ?", new String[] {title});
+    }
 }
