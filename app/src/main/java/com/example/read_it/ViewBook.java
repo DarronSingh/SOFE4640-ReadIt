@@ -117,16 +117,14 @@ public class ViewBook extends AppCompatActivity {
     }
 
     public void save(View v){
-        boolean isInserted = myDB.saveFavBooks(book.getTitle(), book.getAuthors(), book.getDescription(), book.getPageCount(), book.getRating(), book.getPreviewLink(), book.getBuyLink(), book.getThumbnailLink(), 0);
+        boolean isInserted = myDB.saveFavBooks(book.getTitle(), book.getAuthors(), book.getDescription(), book.getPageCount(), book.getRating(), book.getPreviewLink(), book.getBuyLink(), book.getThumbnailLink(), book.getProgress());
         Toast.makeText(ViewBook.this, book.getTitle() + "has been saved!", Toast.LENGTH_SHORT).show();
-
     }
 
     public void back(View v){
         Intent intent = new Intent(ViewBook.this, SearchBooks.class);
         startActivity(intent);
     }
-
 
     static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;

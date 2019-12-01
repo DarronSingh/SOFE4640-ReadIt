@@ -21,7 +21,7 @@ public class BookClass implements Parcelable {
 
     public BookClass() { };
 
-    public BookClass(String title, String authors, String description, int pageCount, double rating, String previewLink, String buyLink, String thumbnailLink){
+    public BookClass(String title, String authors, String description, int pageCount, double rating, String previewLink, String buyLink, String thumbnailLink, int progress){
         this.title = title;
         this.authors=authors;
         this.description = description;
@@ -46,6 +46,14 @@ public class BookClass implements Parcelable {
         progress = in.readInt();
 
         //imageUrl = in.readString();
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 
     public String getThumbnailLink() {
@@ -148,6 +156,7 @@ public class BookClass implements Parcelable {
         parcel.writeString(previewLink);
         parcel.writeString(buyLink);
         parcel.writeString(thumbnailLink);
+        parcel.writeInt(progress);
         //parcel.writeString(imageUrl);
 
 

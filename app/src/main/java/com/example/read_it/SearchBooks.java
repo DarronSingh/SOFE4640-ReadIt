@@ -53,10 +53,8 @@ public class SearchBooks extends AppCompatActivity {
 
     // Array of strings for ListView Title
     ArrayList<String> listviewTitle = new ArrayList<>();
-
     ArrayList<String> listviewShortDescription = new ArrayList<>();
 
-    ArrayList<String> listviewImage = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +82,6 @@ public class SearchBooks extends AppCompatActivity {
                 searchBooks(firstPref);
 
             } else if (strData.equals("From_home")) {
-                //search.setText("");
             }
         }
 
@@ -111,6 +108,8 @@ public class SearchBooks extends AppCompatActivity {
      */
     public void setupAdapter(int length) throws JSONException {
 
+
+        viewSearch.setAdapter(null);
         for (BookClass book : books) {
             listviewShortDescription.add(book.getAuthors());
             listviewTitle.add(book.getTitle());
@@ -150,6 +149,8 @@ public class SearchBooks extends AppCompatActivity {
     }
 
     public void searchBooks(View v) {
+        books.clear();
+        viewSearch.setAdapter(null);
         RequestQueue queue = Volley.newRequestQueue(this);
 
         String searchQuery = search.getText().toString();
@@ -180,6 +181,8 @@ public class SearchBooks extends AppCompatActivity {
     }
 
     public void searchBooks(String genre) {
+        books.clear();
+        viewSearch.setAdapter(null);
         RequestQueue queue = Volley.newRequestQueue(this);
 
         String finalQuery = URI + "subject:" + genre;
@@ -232,7 +235,7 @@ public class SearchBooks extends AppCompatActivity {
             String previewLink = bookJson.has("previewLink") ? bookJson.getString("previewLink") : "";
             String buyLink = saleJson.has("buyLink") ? saleJson.getString("buyLink") : "";
 
-            BookClass book = new BookClass(title,authorsString, description, pageCount, rating, previewLink, buyLink, imageUrl);
+            BookClass book = new BookClass(title,authorsString, description, pageCount, rating, previewLink, buyLink, imageUrl, 0);
             books.add(book);
         }
 

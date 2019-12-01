@@ -30,6 +30,7 @@ public class UserHome extends AppCompatActivity {
     ArrayList<String> listViewDes = new ArrayList<>();
     ArrayList<Integer> listViewPage = new ArrayList<>();
     ArrayList<String> listViewImage = new ArrayList<>();
+    ArrayList<Integer> listViewProgress = new ArrayList<>();
 
     List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
     String[] from = {"listview_image", "listview_title", "listview_discription"};
@@ -55,11 +56,13 @@ public class UserHome extends AppCompatActivity {
                String description = favBooks.getString(favBooks.getColumnIndex("description"));
                int pageNum = favBooks.getInt(favBooks.getColumnIndex("page_count"));
                String urlImage = favBooks.getString(favBooks.getColumnIndex("thumbnail_link"));
+               int progress = favBooks.getInt(favBooks.getColumnIndex("progress"));
 
                listViewTitle.add(title);
                listViewDes.add(authors + "\n\n" + description);
                listViewPage.add(pageNum);
                listViewImage.add(urlImage);
+               listViewProgress.add(progress);
 
                favBooks.moveToNext();
            }
@@ -84,12 +87,14 @@ public class UserHome extends AppCompatActivity {
                 String d = listViewDes.get(i);
                 int numberOfPages = listViewPage.get(i);
                 String imageUrl = listViewImage.get(i);
+                int progress = listViewProgress.get(i);
 
                 Intent intent = new Intent(UserHome.this, ViewSavedBook.class);
                 intent.putExtra("BookInfo", t);
                 intent.putExtra("BookDes", d);
                 intent.putExtra("numOfPages", numberOfPages);
                 intent.putExtra("imageUrl", imageUrl);
+                intent.putExtra("progress", progress);
                 startActivity(intent);
             }
         });

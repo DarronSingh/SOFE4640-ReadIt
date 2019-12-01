@@ -130,8 +130,23 @@ public class Database extends SQLiteOpenHelper {
         return data;
     }
 
+    public Cursor getSavedBookProgress(String title){
+        SQLiteDatabase db = this.getWritableDatabase();
+        title = title.replace("'", "''");
+        Cursor data = db.rawQuery("SELECT " + PROGRESS + " FROM " + TBL_USERBOOKS + " WHERE " + USERBOOKS_TITLE + "='" + title + "'", null);
+        return data;
+    }
+
     public Integer delete (String title) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TBL_USERBOOKS, "title = ?", new String[] {title});
+    }
+
+    public int updateProgress(String title, int progress) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(PROGRESS, progress);
+
+        return db.update(TBL_USERBOOKS, values, "title = ?", new String[] {title});
     }
 }
