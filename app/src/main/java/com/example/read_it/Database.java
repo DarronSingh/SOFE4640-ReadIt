@@ -132,6 +132,7 @@ public class Database extends SQLiteOpenHelper {
 
     public Cursor getSavedBookProgress(String title){
         SQLiteDatabase db = this.getWritableDatabase();
+        title = title.replace("'", "''");
         Cursor data = db.rawQuery("SELECT " + PROGRESS + " FROM " + TBL_USERBOOKS + " WHERE " + USERBOOKS_TITLE + "='" + title + "'", null);
         return data;
     }
