@@ -37,7 +37,7 @@ public class ViewBook extends AppCompatActivity {
         setContentView(R.layout.activity_view_book);
 
         getSupportActionBar().setTitle("Book Information");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         myDB = new Database(this);
         saveBtn = findViewById(R.id.saveButton);
@@ -48,11 +48,7 @@ public class ViewBook extends AppCompatActivity {
         ratingView = findViewById(R.id.ratingText);
         pageCountView = findViewById(R.id.pageCountText);
         thumbnailImage = findViewById(R.id.thumbNailView);
-
-
-
-
-
+        backBtn = findViewById(R.id.backBtn);
 
         book = getIntent().getParcelableExtra("bookInfo");
 
@@ -119,8 +115,8 @@ public class ViewBook extends AppCompatActivity {
     }
 
     public void back(View v){
-        Intent intent = new Intent(ViewBook.this, SearchBooks.class);
-        startActivity(intent);
+        setResult(13);
+        finish();
     }
 
     static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

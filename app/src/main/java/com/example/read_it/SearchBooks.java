@@ -125,11 +125,8 @@ public class SearchBooks extends AppCompatActivity {
             //hm.put("listview_image", listviewImage.get(i));
             hm.put("listview_image", Integer.toString(R.drawable.logo));
 
-
             aList.add(hm);
         }
-
-
         SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_activity, from, to);
         viewSearch.setAdapter(simpleAdapter);
 
@@ -142,7 +139,8 @@ public class SearchBooks extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(SearchBooks.this, ViewBook.class);
                 intent.putExtra("bookInfo", books.get(i));
-                startActivity(intent);
+                int REQUESTCODE = 13;
+                startActivityForResult(intent, REQUESTCODE);
             }
         });
 
@@ -150,6 +148,10 @@ public class SearchBooks extends AppCompatActivity {
 
     public void searchBooks(View v) {
         books.clear();
+        aList.clear();
+        listviewTitle.clear();
+        listviewShortDescription.clear();
+
         viewSearch.setAdapter(null);
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -182,6 +184,10 @@ public class SearchBooks extends AppCompatActivity {
 
     public void searchBooks(String genre) {
         books.clear();
+        aList.clear();
+        listviewTitle.clear();
+        listviewShortDescription.clear();
+
         viewSearch.setAdapter(null);
         RequestQueue queue = Volley.newRequestQueue(this);
 
