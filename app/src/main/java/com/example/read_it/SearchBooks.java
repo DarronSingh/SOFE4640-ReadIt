@@ -42,6 +42,7 @@ public class SearchBooks extends AppCompatActivity {
 
     TextView search;
     Button searchBtn;
+    Button homeBtn;
     ListView viewSearch;
     ArrayList<BookClass> books = new ArrayList<BookClass>();
     final String key = "AIzaSyDIgCNZ9J2qBFeCT8gxVW4-ZRZd4bllw-0";
@@ -65,8 +66,7 @@ public class SearchBooks extends AppCompatActivity {
         searchBtn = findViewById(R.id.search);
         viewSearch = findViewById(R.id.viewBooks);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         /*
         If statement below checks which activity is calling the search books activity
@@ -253,15 +253,10 @@ public class SearchBooks extends AppCompatActivity {
         return s.length() < 2 ? s : s.substring(0, s.length()-2);
 
     }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == android.R.id.home) {
-            this.finish();
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void goHome(View view){
+        Intent intent = new Intent(SearchBooks.this, UserHome.class);
+        startActivity(intent);
     }
+
+
 }

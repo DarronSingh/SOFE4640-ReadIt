@@ -50,9 +50,6 @@ public class ViewBook extends AppCompatActivity {
         thumbnailImage = findViewById(R.id.thumbNailView);
 
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 
 
@@ -151,17 +148,11 @@ public class ViewBook extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == android.R.id.home) {
-            this.finish();
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void goHome(View view) {
+        Intent intent = new Intent(ViewBook.this, UserHome.class);
+        startActivity(intent);
     }
+
 }
 
 
