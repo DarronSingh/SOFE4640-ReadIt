@@ -16,6 +16,7 @@ public class BookClass implements Parcelable {
     private String previewLink;
     private String buyLink;
     private String thumbnailLink;
+    private int progress;
 
 
     public BookClass() { };
@@ -29,6 +30,7 @@ public class BookClass implements Parcelable {
         this.previewLink = previewLink;
         this.buyLink = buyLink;
         this.thumbnailLink = thumbnailLink;
+        this.progress = progress;
         //this.imageUrl = imageUrl;
     }
 
@@ -41,6 +43,8 @@ public class BookClass implements Parcelable {
         previewLink = in.readString();
         buyLink = in.readString();
         thumbnailLink = in.readString();
+        progress = in.readInt();
+
         //imageUrl = in.readString();
     }
 

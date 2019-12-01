@@ -104,7 +104,7 @@ public class Database extends SQLiteOpenHelper {
        // db.execSQL("DROP IF TABLE EXISTS " + TBL_AUTHORS + TBL_GENRES + TBL_USERBOOKS + TBL_NOTES + TBL_AUTHOR_PREFERENCES + TBL_GENRE_PREFERENCES);
     }
 
-    public boolean saveFavBooks(String bookTitle, String bookAuthor, String description, int pageCount, double rating, String buyLink, String previewLink, String thumbnailLink) {
+    public boolean saveFavBooks(String bookTitle, String bookAuthor, String description, int pageCount, double rating, String buyLink, String previewLink, String thumbnailLink, int progress) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(USERBOOKS_TITLE, bookTitle);
@@ -115,6 +115,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(BOOKLINKBUY, buyLink);
         values.put(BOOKLINKPREVIEW, previewLink);
         values.put(THUMBNAILLINK, thumbnailLink );
+        values.put(PROGRESS, progress);
         long result = db.insert(TBL_USERBOOKS, null, values);
         if (result == -1) {
             return false;

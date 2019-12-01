@@ -1,5 +1,6 @@
 package com.example.read_it;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -48,7 +50,8 @@ public class ViewBook extends AppCompatActivity {
         thumbnailImage = findViewById(R.id.thumbNailView);
 
 
-
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -114,7 +117,7 @@ public class ViewBook extends AppCompatActivity {
     }
 
     public void save(View v){
-        boolean isInserted = myDB.saveFavBooks(book.getTitle(), book.getAuthors(), book.getDescription(), book.getPageCount(), book.getRating(), book.getPreviewLink(), book.getBuyLink(), book.getThumbnailLink());
+        boolean isInserted = myDB.saveFavBooks(book.getTitle(), book.getAuthors(), book.getDescription(), book.getPageCount(), book.getRating(), book.getPreviewLink(), book.getBuyLink(), book.getThumbnailLink(), 0);
         Toast.makeText(ViewBook.this, book.getTitle() + "has been saved!", Toast.LENGTH_SHORT).show();
 
     }
@@ -150,6 +153,17 @@ public class ViewBook extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
 
 
